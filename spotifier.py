@@ -16,17 +16,26 @@ import json
 import time
 
 
+
 try:
 	import dhtmlparser as html
 except ImportError:
 	sys.stderr.write(
-		"This script requires DHTMLParser python module.\n"
+		"This script requires pyDHTMLParser python module.\n"
 		"You can download it from "
-		"https://github.com/Bystroushaak/DHTMLParser/tree/python\n"
+		"https://github.com/Bystroushaak/pyDHTMLParser\n"
 	)
 	sys.exit(1)
 
-from downloader import Downloader
+try:
+	from httpkie import Downloader
+except ImportError:
+	sys.stderr.write(
+		"This script requires httpkie python module.\n"
+		"You can download it from "
+		"https://github.com/Bystroushaak/httpkie\n"
+	)
+	sys.exit(1)
 
 
 

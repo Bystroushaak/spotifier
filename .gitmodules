@@ -1,0 +1,6 @@
+[submodule "dhtmlparser"]
+	path = dhtmlparser
+	url = https://github.com/Bystroushaak/pyDHTMLParser.git
+[submodule "httpkie"]
+	path = httpkie
+	url = https://github.com/Bystroushaak/httpkie.git
