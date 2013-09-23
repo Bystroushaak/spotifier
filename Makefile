@@ -8,7 +8,6 @@
 
 all:
 	git submodule init
-	git submodule update
-
-	cd httpkie; git pull; cd ..
-	cd dhtmlparser; git pull; cd ..
+	git submodule update --recursive
+	git pull --recurse-submodules
+	git submodule foreach "git checkout master"
