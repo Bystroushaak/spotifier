@@ -1,0 +1,4 @@
+Module for registration/login to spotify.
+
+This is specifically usefull for users from non-supported countries, because it
+allows them to login / register with proxy with much more ease.
