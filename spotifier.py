@@ -171,7 +171,7 @@ def register(username, password, email, gender, date_of_birth_ts, http_proxy = N
 		)
 
 
-def login(username, password, http_proxy):
+def login(username, password, http_proxy = None):
 	"""
 	Just login into spotify. This is usefull, because users from unsupported
 	countries have to login thru IP from supported country every ~twoweeks, or
