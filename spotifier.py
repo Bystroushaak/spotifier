@@ -5,6 +5,10 @@ Module for registration/login to spotify.
 This is specifically usefull for users from non-supported countries, because it
 allows them to login / register with proxy with much more ease.
 
+Functions supports http_proxy keyword. Only HTTP proxies are supported, HTTPS
+aren't! If you wan't to use SOCK5 proxy, see IPtools:
+https://github.com/Bystroushaak/IPtools
+
 Author: Bystroushaak (bystrousak@kitakitsune.org)
 Interpreter version: python 2.7
 This work is licensed under a Creative Commons 3.0 Unported License
@@ -73,7 +77,7 @@ class InvalidGenderException(SpotifierException):
 
 
 
-def register(username, password, email, gender, date_of_birth_ts):
+def register(username, password, email, gender, date_of_birth_ts, http_proxy = None):
 	"""
 	Register new account, raise proper exceptions if there is a problem:
 	 - InvalidUsernameException
@@ -85,14 +89,20 @@ def register(username, password, email, gender, date_of_birth_ts):
 
 	Email is not verified, so you can use pretty much everything.
 
-	Bevare of date_of_birth_ts timestamp - spotify won't let you register too 
+	Bevare of date_of_birth_ts timestamp - spotify won't let you register too
 	much young accounts, so in case of trouble, try subtracting 567648000 for 18
 	years.
+
+	Function supports http_proxy parameter in format "http://server:port".
 	"""
 	d = Downloader()
-	d.download("https://www.spotify.com/us/login/?forward_url=%2Fus%2F")  # cookies
+	d.download(  # cookies
+		"https://www.spotify.com/us/login/?forward_url=%2Fus%2F",
+		http_proxy = http_proxy
+	)
 	dom = html.parseString(
-		d.download("https://www.spotify.com/us/signup/?forward_url=%2Fus%2F")
+		d.download("https://www.spotify.com/us/signup/?forward_url=%2Fus%2F"),
+		http_proxy = http_proxy
 	)
 
 	# check username
@@ -146,7 +156,8 @@ def register(username, password, email, gender, date_of_birth_ts):
 
 	data = d.download(
 		"https://www.spotify.com/us/xhr/json/sign-up-for-spotify.php",
-		post = reg_form
+		post = reg_form,
+		http_proxy = http_proxy
 	)
 
 	jdata = json.loads(data)
@@ -160,18 +171,23 @@ def register(username, password, email, gender, date_of_birth_ts):
 		)
 
 
-def login(username, password):
+def login(username, password, http_proxy):
 	"""
 	Just login into spotify. This is usefull, because users from unsupported
 	countries have to login thru IP from supported country every ~twoweeks, or
 	their account is frozen until they do so.
+
+	Function supports http_proxy parameter in format "http://server:port".
 
 	Raise:
 	 - SpotifierException if there is some problem.
 	"""
 	d = Downloader()
 	dom = html.parseString(
-		d.download("https://www.spotify.com/us/login/?forward_url=%2Fus%2F")
+		d.download(
+			"https://www.spotify.com/us/login/?forward_url=%2Fus%2F",
+			http_proxy = http_proxy
+		)
 	)
 
 	log_form = {
@@ -183,7 +199,8 @@ def login(username, password):
 
 	data = d.download(
 		"https://www.spotify.com/us/xhr/json/login.php",
-		post = log_form
+		post = log_form,
+		http_proxy = http_proxy
 	)
 	jdata = json.loads(data)
 

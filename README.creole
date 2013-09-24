@@ -2,3 +2,6 @@ Module for registration/login to spotify.
 
 This is specifically usefull for users from non-supported countries, because it
 allows them to login / register with proxy with much more ease.
+
+Functions supports http_proxy keyword. Only HTTP proxies are supported, HTTPS
+aren't! If you wan't to use SOCK5 proxy, see [[https://github.com/Bystroushaak/IPtools|IPtools]].
