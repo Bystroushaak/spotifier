@@ -95,14 +95,12 @@ def register(username, password, email, gender, date_of_birth_ts, http_proxy = N
 
 	Function supports http_proxy parameter in format "http://server:port".
 	"""
-	d = Downloader()
+	d = Downloader(http_proxy = http_proxy)
 	d.download(  # cookies
 		"https://www.spotify.com/us/login/?forward_url=%2Fus%2F",
-		http_proxy = http_proxy
 	)
 	dom = html.parseString(
 		d.download("https://www.spotify.com/us/signup/?forward_url=%2Fus%2F"),
-		http_proxy = http_proxy
 	)
 
 	# check username
@@ -157,7 +155,6 @@ def register(username, password, email, gender, date_of_birth_ts, http_proxy = N
 	data = d.download(
 		"https://www.spotify.com/us/xhr/json/sign-up-for-spotify.php",
 		post = reg_form,
-		http_proxy = http_proxy
 	)
 
 	jdata = json.loads(data)
@@ -182,11 +179,10 @@ def login(username, password, http_proxy = None):
 	Raise:
 	 - SpotifierException if there is some problem.
 	"""
-	d = Downloader()
+	d = Downloader(http_proxy = http_proxy)
 	dom = html.parseString(
 		d.download(
 			"https://www.spotify.com/us/login/?forward_url=%2Fus%2F",
-			http_proxy = http_proxy
 		)
 	)
 
@@ -200,7 +196,6 @@ def login(username, password, http_proxy = None):
 	data = d.download(
 		"https://www.spotify.com/us/xhr/json/login.php",
 		post = log_form,
-		http_proxy = http_proxy
 	)
 	jdata = json.loads(data)
 
