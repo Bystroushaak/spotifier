@@ -110,7 +110,7 @@ def register(username, password, email, gender, date_of_birth_ts, http_proxy = N
 	)
 	if valid_username.strip() != "true":
 		raise InvalidUsernameException(
-			"Username'" + username + "' is invalid or already in use!"
+			"Username '" + username + "' is invalid or already in use!"
 		)
 
 	# check password lenght
